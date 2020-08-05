@@ -6,6 +6,9 @@ import {createTopRatedTemplate} from "./view/top-rated.js";
 import {createMostCommentedTemplate} from "./view/most-commented.js";
 import {createFilmCardTemplate} from "./view/film-card.js";
 import {createStatTemplate} from "./view/stat.js";
+import {generateFilm} from "./mock/film.js";
+
+console.log(generateFilm());
 
 const CARDS_AMOUNT = 5;
 

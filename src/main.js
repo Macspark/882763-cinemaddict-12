@@ -5,6 +5,7 @@ import {createFilmsBlockTemplate} from "./view/films-block.js";
 // import {createTopRatedTemplate} from "./view/top-rated.js";
 // import {createMostCommentedTemplate} from "./view/most-commented.js";
 import {createFilmCardTemplate} from "./view/film-card.js";
+import {createDetailsTemplate} from "./view/details.js";
 import {createLoadMoreBtnTemplate} from "./view/load-more-btn.js";
 import {createStatTemplate} from "./view/stat.js";
 import {generateFilm} from "./mock/film.js";
@@ -65,5 +66,17 @@ if (filmsList.length > FILMS_PER_STEP) {
 // render(mostCommentedContainer, createFilmCardTemplate(), `afterbegin`);
 // render(mostCommentedContainer, createFilmCardTemplate(), `afterbegin`);
 
+const footer = document.querySelector(`.footer`);
 const footerStats = document.querySelector(`.footer__statistics`);
 render(footerStats, createStatTemplate(filmsList.length), `beforeend`);
+
+const createFilmPopup = () => {
+  render(footer, createDetailsTemplate(filmsList[0]), `afterend`);
+};
+const filmTitle = filmsContainer.querySelector(`.film-card__title`);
+const filmPoster = filmsContainer.querySelector(`.film-card__poster`);
+const filmComments = filmsContainer.querySelector(`.film-card__comments`);
+
+filmTitle.addEventListener(`click`, createFilmPopup);
+filmPoster.addEventListener(`click`, createFilmPopup);
+filmComments.addEventListener(`click`, createFilmPopup);

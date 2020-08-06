@@ -1,21 +1,7 @@
-const humanizeDuration = (value) => {
-  const hour = 60;
-  const hours = Math.floor(value / hour);
-  if (hours === 0) {
-    return `${value}m`;
-  } else {
-    const minutes = value - (hours * hour);
-    if (minutes !== 0) {
-      return `${hours}h ${minutes}m`;
-    } else {
-      return `${hours}h`;
-    }
-  }
-};
+import {humanizeDuration} from "../util.js";
 
 export const createFilmCardTemplate = (film) => {
   const {title, rating, year, duration, genre, poster, description, comments} = film;
-  const humanizedDuration = humanizeDuration(duration);
 
   return (
     `<article class="film-card">
@@ -23,7 +9,7 @@ export const createFilmCardTemplate = (film) => {
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
         <span class="film-card__year">${year}</span>
-        <span class="film-card__duration">${humanizedDuration}</span>
+        <span class="film-card__duration">${humanizeDuration(duration)}</span>
         <span class="film-card__genre">${genre[0]}</span>
       </p>
       <img src="${poster}" alt="${title}" class="film-card__poster">

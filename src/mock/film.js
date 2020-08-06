@@ -78,7 +78,7 @@ const generateDate = () => {
 
 const generateComment = () => {
   const EMOTIONS = [
-    `mile`,
+    `smile`,
     `sleeping`,
     `puke`,
     `angry`

@@ -25,7 +25,7 @@ const generateTitle = () => {
 };
 
 const generatePoster = () => {
-  const FILM_POSTERS_LINK = `/public/images/posters`;
+  const FILM_POSTERS_LINK = `./images/posters/`;
   const FILM_POSTERS = [
     `made-for-each-other.png`,
     `popeye-meets-sinbad.png`,

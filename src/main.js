@@ -5,11 +5,12 @@ import {createFilmsBlockTemplate} from "./view/films-block.js";
 // import {createTopRatedTemplate} from "./view/top-rated.js";
 // import {createMostCommentedTemplate} from "./view/most-commented.js";
 import {createFilmCardTemplate} from "./view/film-card.js";
+import {createLoadMoreBtnTemplate} from "./view/load-more-btn.js";
 import {createStatTemplate} from "./view/stat.js";
 import {generateFilm} from "./mock/film.js";
 import {generateFilter} from "./mock/filter.js";
 
-const FILMS_AMOUNT = 20;
+const FILMS_AMOUNT = 17;
 const FILMS_PER_STEP = 5;
 const filmsList = new Array(FILMS_AMOUNT).fill().map(generateFilm);
 const filters = generateFilter(filmsList);
@@ -26,11 +27,31 @@ render(main, createFilterTemplate(filters), `beforeend`);
 render(main, createSortTemplate(), `beforeend`);
 render(main, createFilmsBlockTemplate(), `beforeend`);
 
-const films = main.querySelector(`.films`);
-const filmsContainer = films.querySelector(`.films-list__container`);
+const filmsElement = main.querySelector(`.films`);
+const filmsContainer = filmsElement.querySelector(`.films-list__container`);
 
 for (let i = 0; i < Math.min(filmsList.length, FILMS_PER_STEP); i++) {
-  render(filmsContainer, createFilmCardTemplate(filmsList[i]), `afterbegin`);
+  render(filmsContainer, createFilmCardTemplate(filmsList[i]), `beforeend`);
+}
+
+if (filmsList.length > FILMS_PER_STEP) {
+  render(filmsContainer, createLoadMoreBtnTemplate(), `afterend`);
+
+  const loadMoreBtn = filmsElement.querySelector(`.films-list__show-more`);
+  let renderedFilms = FILMS_PER_STEP;
+
+  loadMoreBtn.addEventListener(`click`, (evt) => {
+    evt.preventDefault();
+    filmsList
+      .slice(renderedFilms, renderedFilms + FILMS_PER_STEP)
+      .forEach((film) => render(filmsContainer, createFilmCardTemplate(film), `beforeend`));
+
+    renderedFilms += FILMS_PER_STEP;
+
+    if (renderedFilms >= filmsList.length) {
+      loadMoreBtn.remove();
+    }
+  });
 }
 
 // render(films, createTopRatedTemplate(), `beforeend`);
@@ -45,4 +66,4 @@ for (let i = 0; i < Math.min(filmsList.length, FILMS_PER_STEP); i++) {
 // render(mostCommentedContainer, createFilmCardTemplate(), `afterbegin`);
 
 const footerStats = document.querySelector(`.footer__statistics`);
-render(footerStats, createStatTemplate(), `beforeend`);
+render(footerStats, createStatTemplate(filmsList.length), `beforeend`);

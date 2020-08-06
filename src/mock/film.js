@@ -139,19 +139,8 @@ const generateDuration = () => {
     MIN: 50,
     MAX: 210
   };
-  const hour = 60;
   const duration = getRandomInteger(DurationMinRange.MIN, DurationMinRange.MAX);
-  const hours = Math.floor(duration / hour);
-  if (hours === 0) {
-    return `${duration}m`;
-  } else {
-    const minutes = duration - (hours * hour);
-    if (minutes !== 0) {
-      return `${hours}h ${minutes}m`;
-    } else {
-      return `${hours}h`;
-    }
-  }
+  return duration;
 };
 
 const generateGenre = () => {
@@ -181,5 +170,8 @@ export const generateFilm = () => {
     year: generateYear(),
     duration: generateDuration(),
     genre: generateGenre(),
+    isWatchlisted: Boolean(getRandomInteger(0, 1)),
+    isWatched: Boolean(getRandomInteger(0, 1)),
+    isFavorite: Boolean(getRandomInteger(0, 1))
   };
 };

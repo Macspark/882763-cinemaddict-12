@@ -67,7 +67,7 @@ const generateDescription = () => {
   return description;
 };
 
-const generateDate = () => {
+const generateCommentDate = () => {
   const year = getRandomInteger(2000, 2020);
   const month = getRandomInteger(1, 12);
   const day = getRandomInteger(1, 30);
@@ -99,7 +99,7 @@ const generateComment = () => {
 
   return {
     emotion: getRandomElement(EMOTIONS),
-    date: generateDate(),
+    date: generateCommentDate(),
     author: getRandomElement(AUTHORS),
     message: getRandomElement(MESSAGES)
   };
@@ -126,7 +126,7 @@ const generateRating = () => {
   return getRandomInteger(RatingRange.MIN, RatingRange.MAX);
 };
 
-const generateYear = () => {
+const generateReleaseYear = () => {
   const YearRange = {
     MIN: 1920,
     MAX: 2020
@@ -159,15 +159,71 @@ const generateGenre = () => {
   return filmGenres;
 };
 
+const generateRandomName = () => {
+  const NAMES = [
+    `Anthony Mann`,
+    `Anne Wigton`,
+    `Heinz Herald`,
+    `Richard Weil`,
+    `Erich von Stroheim`,
+    `Mary Beth Hughes`,
+    `Dan Duryea`
+  ];
+  return getRandomElement(NAMES);
+};
+
+const generateRandomNames = (min, max) => {
+  let names = [];
+  const amount = getRandomInteger(min, max);
+  for (let i = 0; i < amount; i++) {
+    names.push(generateRandomName());
+  }
+  return names.join(`, `);
+};
+
+const generateReleaseDate = () => {
+  const MONTHS = [
+    `January`,
+    `February`,
+    `March`,
+    `April`,
+    `May`,
+    `June`,
+    `July`
+  ];
+  const month = getRandomElement(MONTHS);
+  const day = getRandomInteger(1, 30);
+  const date = `${day} ${month}`;
+  return date;
+};
+
+const generateRandomCountry = () => {
+  const COUNTRIES = [
+    `Russia`,
+    `Germany`,
+    `USA`,
+    `UK`,
+    `France`,
+    `Japan`
+  ];
+  return getRandomElement(COUNTRIES);
+};
+
 
 export const generateFilm = () => {
   return {
     title: generateTitle(),
+    titleOriginal: generateTitle(),
+    director: generateRandomName(),
+    writers: generateRandomNames(1, 3),
+    actors: generateRandomNames(1, 3),
     poster: generatePoster(),
     description: generateDescription(),
     comments: generateComments(),
     rating: generateRating(),
-    year: generateYear(),
+    releaseYear: generateReleaseYear(),
+    releaseDate: generateReleaseDate(),
+    country: generateRandomCountry(),
     duration: generateDuration(),
     genre: generateGenre(),
     isWatchlisted: Boolean(getRandomInteger(0, 1)),

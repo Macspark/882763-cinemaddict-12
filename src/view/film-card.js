@@ -1,14 +1,14 @@
 import {humanizeDuration} from "../util.js";
 
 export const createFilmCardTemplate = (film) => {
-  const {title, rating, year, duration, genre, poster, description, comments} = film;
+  const {title, rating, releaseYear, duration, genre, poster, description, comments} = film;
 
   return (
     `<article class="film-card">
       <h3 class="film-card__title">${title}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${year}</span>
+        <span class="film-card__year">${releaseYear}</span>
         <span class="film-card__duration">${humanizeDuration(duration)}</span>
         <span class="film-card__genre">${genre[0]}</span>
       </p>

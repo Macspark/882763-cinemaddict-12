@@ -36,7 +36,7 @@ const createCommentsTemplate = (comments) => {
 };
 
 export const createDetailsTemplate = (film) => {
-  const {title, titleOriginal, rating, director, writers, actors, fullDate, duration, country, genre, poster, description, comments, isWatchlisted, isWatched, isFavorite} = film;
+  const {title, titleOriginal, rating, director, writers, actors, releaseYear, releaseDate, duration, country, genre, poster, description, comments, isWatchlisted, isWatched, isFavorite} = film;
 
   return (
     `<section class="film-details">
@@ -79,7 +79,7 @@ export const createDetailsTemplate = (film) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${fullDate}</td>
+                  <td class="film-details__cell">${releaseDate} ${releaseYear}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>

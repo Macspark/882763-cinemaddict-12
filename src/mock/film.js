@@ -209,11 +209,22 @@ const generateRandomCountry = () => {
   return getRandomElement(COUNTRIES);
 };
 
+const generateAgeRestrictions = () => {
+  const RATINGS = [
+    `18+`,
+    `13+`,
+    `3+`,
+    `50+`,
+  ];
+  return getRandomElement(RATINGS);
+};
+
 
 export const generateFilm = () => {
   return {
     title: generateTitle(),
     titleOriginal: generateTitle(),
+    ageRestrictions: generateAgeRestrictions(),
     director: generateRandomName(),
     writers: generateRandomNames(1, 3),
     actors: generateRandomNames(1, 3),

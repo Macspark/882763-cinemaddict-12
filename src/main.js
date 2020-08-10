@@ -2,19 +2,17 @@ import {createUserTemplate} from "./view/user.js";
 import {createFilterTemplate} from "./view/filter.js";
 import {createSortTemplate} from "./view/sort.js";
 import {createFilmsBlockTemplate} from "./view/films-block.js";
-// import {createTopRatedTemplate} from "./view/top-rated.js";
-// import {createMostCommentedTemplate} from "./view/most-commented.js";
 import {createFilmCardTemplate} from "./view/film-card.js";
 import {createDetailsTemplate} from "./view/details.js";
 import {createLoadMoreBtnTemplate} from "./view/load-more-btn.js";
 import {createStatTemplate} from "./view/stat.js";
 import {generateFilm} from "./mock/film.js";
-import {generateFilter} from "./mock/filter.js";
+import {generateFilters} from "./mock/filter.js";
 
 const FILMS_AMOUNT = 17;
 const FILMS_PER_STEP = 5;
 const filmsList = new Array(FILMS_AMOUNT).fill().map(generateFilm);
-const filters = generateFilter(filmsList);
+const filters = generateFilters(filmsList);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -54,17 +52,6 @@ if (filmsList.length > FILMS_PER_STEP) {
     }
   });
 }
-
-// render(films, createTopRatedTemplate(), `beforeend`);
-// render(films, createMostCommentedTemplate(), `beforeend`);
-
-// const topRatedContainer = films.querySelector(`.films-list--rated .films-list__container`);
-// const mostCommentedContainer = films.querySelector(`.films-list--commented .films-list__container`);
-
-// render(topRatedContainer, createFilmCardTemplate(), `afterbegin`);
-// render(topRatedContainer, createFilmCardTemplate(), `afterbegin`);
-// render(mostCommentedContainer, createFilmCardTemplate(), `afterbegin`);
-// render(mostCommentedContainer, createFilmCardTemplate(), `afterbegin`);
 
 const footer = document.querySelector(`.footer`);
 const footerStats = document.querySelector(`.footer__statistics`);

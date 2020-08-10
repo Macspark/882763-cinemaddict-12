@@ -1,4 +1,4 @@
-export const generateFilter = (films) => {
+export const generateFilters = (films) => {
   const watchlist = films.filter((it) => {
     return it.isWatchlisted;
   });

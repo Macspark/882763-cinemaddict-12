@@ -1,9 +1,4 @@
-const getRandomInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-};
+import {getRandomInteger} from "../util.js";
 
 const getRandomElement = (arr) => {
   const randomIndex = getRandomInteger(0, arr.length - 1);
@@ -68,12 +63,10 @@ const generateDescription = () => {
 };
 
 const generateCommentDate = () => {
-  const year = getRandomInteger(2000, 2020);
-  const month = getRandomInteger(1, 12);
-  const day = getRandomInteger(1, 30);
-  const hour = getRandomInteger(0, 24);
-  const minute = getRandomInteger(0, 59);
-  return `${year}/${month}/${day} ${hour}:${minute}`;
+  const MAX_UNIX_TIME = 1597037531;
+  const unixTime = getRandomInteger(0, MAX_UNIX_TIME);
+  const commentDate = new Date(unixTime * 1000);
+  return `${commentDate.getFullYear()}/${commentDate.getMonth()}/${commentDate.getDay()} ${commentDate.getHours()}:${commentDate.getMinutes()}`;
 };
 
 const generateComment = () => {
@@ -111,10 +104,7 @@ const generateComments = () => {
     MAX: 5
   };
   const amount = getRandomInteger(CommentsAmountRange.MIN, CommentsAmountRange.MAX);
-  const comments = [];
-  for (let i = 0; i < amount; i++) {
-    comments.push(generateComment());
-  }
+  const comments = new Array(amount).fill().map(generateComment);
   return comments;
 };
 
@@ -126,12 +116,11 @@ const generateRating = () => {
   return getRandomInteger(RatingRange.MIN, RatingRange.MAX);
 };
 
-const generateReleaseYear = () => {
-  const YearRange = {
-    MIN: 1920,
-    MAX: 2020
-  };
-  return getRandomInteger(YearRange.MIN, YearRange.MAX);
+const generateReleaseDate = () => {
+  const MAX_UNIX_TIME = 1597037531;
+  const unixTime = getRandomInteger(0, MAX_UNIX_TIME);
+  const releaseDate = new Date(unixTime * 1000);
+  return releaseDate;
 };
 
 const generateDuration = () => {
@@ -143,7 +132,7 @@ const generateDuration = () => {
   return duration;
 };
 
-const generateGenre = () => {
+const generateGenres = () => {
   const GENRES = [
     `action`,
     `mystery`,
@@ -181,22 +170,6 @@ const generateRandomNames = (min, max) => {
   return names.join(`, `);
 };
 
-const generateReleaseDate = () => {
-  const MONTHS = [
-    `January`,
-    `February`,
-    `March`,
-    `April`,
-    `May`,
-    `June`,
-    `July`
-  ];
-  const month = getRandomElement(MONTHS);
-  const day = getRandomInteger(1, 30);
-  const date = `${day} ${month}`;
-  return date;
-};
-
 const generateRandomCountry = () => {
   const COUNTRIES = [
     `Russia`,
@@ -209,7 +182,7 @@ const generateRandomCountry = () => {
   return getRandomElement(COUNTRIES);
 };
 
-const generateAgeRestrictions = () => {
+const generateAgeRestriction = () => {
   const RATINGS = [
     `18+`,
     `13+`,
@@ -224,7 +197,7 @@ export const generateFilm = () => {
   return {
     title: generateTitle(),
     titleOriginal: generateTitle(),
-    ageRestrictions: generateAgeRestrictions(),
+    ageRestriction: generateAgeRestriction(),
     director: generateRandomName(),
     writers: generateRandomNames(1, 3),
     actors: generateRandomNames(1, 3),
@@ -232,11 +205,10 @@ export const generateFilm = () => {
     description: generateDescription(),
     comments: generateComments(),
     rating: generateRating(),
-    releaseYear: generateReleaseYear(),
     releaseDate: generateReleaseDate(),
     country: generateRandomCountry(),
     duration: generateDuration(),
-    genre: generateGenre(),
+    genres: generateGenres(),
     isWatchlisted: Boolean(getRandomInteger(0, 1)),
     isWatched: Boolean(getRandomInteger(0, 1)),
     isFavorite: Boolean(getRandomInteger(0, 1))

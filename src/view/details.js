@@ -1,8 +1,8 @@
 import {humanizeDuration} from "../util.js";
 
-const createGenresTemplate = (genre) => {
-  const genresWord = genre.length === 1 ? `Genre` : `Genres`;
-  const genresList = genre.map((it) => {
+const createGenresTemplate = (genres) => {
+  const genresWord = genres.length === 1 ? `Genre` : `Genres`;
+  const genresList = genres.map((it) => {
     return (`<span class="film-details__genre">${it}</span>`);
   }).join(``);
   return (
@@ -36,7 +36,21 @@ const createCommentsTemplate = (comments) => {
 };
 
 export const createDetailsTemplate = (film) => {
-  const {title, titleOriginal, ageRestrictions, rating, director, writers, actors, releaseYear, releaseDate, duration, country, genre, poster, description, comments, isWatchlisted, isWatched, isFavorite} = film;
+  const {title, titleOriginal, ageRestriction, rating, director, writers, actors, releaseDate, duration, country, genres, poster, description, comments, isWatchlisted, isWatched, isFavorite} = film;
+  const months = [
+    `January`,
+    `February`,
+    `March`,
+    `April`,
+    `May`,
+    `June`,
+    `July`,
+    `August`,
+    `Septermber`,
+    `October`,
+    `November`,
+    `December`
+  ];
 
   return (
     `<section class="film-details">
@@ -49,7 +63,7 @@ export const createDetailsTemplate = (film) => {
             <div class="film-details__poster">
               <img class="film-details__poster-img" src="${poster}" alt="${title}">
 
-              <p class="film-details__age">${ageRestrictions}</p>
+              <p class="film-details__age">${ageRestriction}</p>
             </div>
 
             <div class="film-details__info">
@@ -79,7 +93,7 @@ export const createDetailsTemplate = (film) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${releaseDate} ${releaseYear}</td>
+                  <td class="film-details__cell">${releaseDate.getDay()} ${months[releaseDate.getMonth()]} ${releaseDate.getFullYear()}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
@@ -90,7 +104,7 @@ export const createDetailsTemplate = (film) => {
                   <td class="film-details__cell">${country}</td>
                 </tr>
                 <tr class="film-details__row">
-                ${createGenresTemplate(genre)}
+                ${createGenresTemplate(genres)}
                 </tr>
               </table>
 

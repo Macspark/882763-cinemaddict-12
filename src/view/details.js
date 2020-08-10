@@ -37,7 +37,7 @@ const createCommentsTemplate = (comments) => {
 
 export const createDetailsTemplate = (film) => {
   const {title, titleOriginal, ageRestriction, rating, director, writers, actors, releaseDate, duration, country, genres, poster, description, comments, isWatchlisted, isWatched, isFavorite} = film;
-  const months = [
+  const MONTHS = [
     `January`,
     `February`,
     `March`,
@@ -93,7 +93,7 @@ export const createDetailsTemplate = (film) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${releaseDate.getDay()} ${months[releaseDate.getMonth()]} ${releaseDate.getFullYear()}</td>
+                  <td class="film-details__cell">${releaseDate.getDay()} ${MONTHS[releaseDate.getMonth()]} ${releaseDate.getFullYear()}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>

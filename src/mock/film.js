@@ -59,10 +59,10 @@ const generateDescription = () => {
 };
 
 const generateCommentDate = () => {
-  const MAX_UNIX_TIME = 1597037531;
+  const MAX_UNIX_TIME = new Date(2020, 7, 10, 12, 32, 11).getTime();
   const unixTime = getRandomInteger(0, MAX_UNIX_TIME);
-  const commentDate = new Date(unixTime * 1000);
-  return `${commentDate.getFullYear()}/${commentDate.getMonth()}/${commentDate.getDay()} ${commentDate.getHours()}:${commentDate.getMinutes()}`;
+  const commentDate = new Date(unixTime);
+  return commentDate;
 };
 
 const generateComment = () => {
@@ -113,9 +113,9 @@ const generateRating = () => {
 };
 
 const generateReleaseDate = () => {
-  const MAX_UNIX_TIME = 1597037531;
+  const MAX_UNIX_TIME = new Date(2020, 7, 10, 12, 32, 11).getTime();
   const unixTime = getRandomInteger(0, MAX_UNIX_TIME);
-  const releaseDate = new Date(unixTime * 1000);
+  const releaseDate = new Date(unixTime);
   return releaseDate;
 };
 
@@ -137,7 +137,7 @@ const generateGenres = () => {
     `horror`
   ];
   const amount = getRandomInteger(1, GENRES.length);
-  const filmGenres = new Array(amount).fill().map((it) => {
+  const filmGenres = new Array(amount).fill().map(() => {
     return getRandomElement(GENRES);
   });
   return filmGenres;

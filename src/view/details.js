@@ -25,7 +25,7 @@ const createCommentsTemplate = (comments) => {
           <p class="film-details__comment-text">${message}</p>
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${author}</span>
-            <span class="film-details__comment-day">${date}</span>
+            <span class="film-details__comment-day">${date.getFullYear()}/${date.getMonth()}/${date.getDay()} ${date.getHours()}:${date.getMinutes()}</span>
             <button class="film-details__comment-delete">Delete</button>
           </p>
         </div>

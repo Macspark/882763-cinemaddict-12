@@ -1,9 +1,5 @@
 import {getRandomInteger} from "../util.js";
-
-const getRandomElement = (arr) => {
-  const randomIndex = getRandomInteger(0, arr.length - 1);
-  return arr[randomIndex];
-};
+import {getRandomElement} from "../util.js";
 
 const generateTitle = () => {
   const FILM_TITLES = [
@@ -141,10 +137,9 @@ const generateGenres = () => {
     `horror`
   ];
   const amount = getRandomInteger(1, GENRES.length);
-  let filmGenres = [];
-  for (let i = 0; i < amount; i++) {
-    filmGenres.push(getRandomElement(GENRES));
-  }
+  const filmGenres = new Array(amount).fill().map((it) => {
+    return getRandomElement(GENRES);
+  });
   return filmGenres;
 };
 
@@ -162,11 +157,8 @@ const generateRandomName = () => {
 };
 
 const generateRandomNames = (min, max) => {
-  let names = [];
   const amount = getRandomInteger(min, max);
-  for (let i = 0; i < amount; i++) {
-    names.push(generateRandomName());
-  }
+  const names = new Array(amount).fill().map(generateRandomName);
   return names.join(`, `);
 };
 

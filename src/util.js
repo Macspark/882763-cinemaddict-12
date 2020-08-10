@@ -19,3 +19,8 @@ export const getRandomInteger = (a = 0, b = 1) => {
 
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
+
+export const getRandomElement = (arr) => {
+  const randomIndex = getRandomInteger(0, arr.length - 1);
+  return arr[randomIndex];
+};

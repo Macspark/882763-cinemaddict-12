@@ -1,3 +1,4 @@
+import {createElement} from "../util.js";
 import {humanizeDuration} from "../util.js";
 
 const createGenresTemplate = (genres) => {
@@ -35,7 +36,7 @@ const createCommentsTemplate = (comments) => {
   return allComments;
 };
 
-export const createDetailsTemplate = (film) => {
+const createDetailsTemplate = (film) => {
   const {title, titleOriginal, ageRestriction, rating, director, writers, actors, releaseDate, duration, country, genres, poster, description, comments, isWatchlisted, isWatched, isFavorite} = film;
   const MONTHS = [
     `January`,
@@ -169,3 +170,26 @@ export const createDetailsTemplate = (film) => {
     </section>`
   );
 };
+
+export default class Details {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createDetailsTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

@@ -1,22 +1,18 @@
 import {createElement} from "../util.js";
 
-const createMostCommentedTemplate = () => {
+const createNoDataTemplate = () => {
   return (
-    `<section class="films-list--extra films-list--commented">
-      <h2 class="films-list__title">Most commented</h2>
-      <div class="films-list__container">
-      </div>
-    </section>`
+    `<h2 class="films-list__title">There are no movies in our database</h2>`
   );
 };
 
-export default class MostCommented {
+export default class NoData {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createMostCommentedTemplate();
+    return createNoDataTemplate();
   }
 
   getElement() {

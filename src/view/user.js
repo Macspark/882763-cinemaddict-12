@@ -10,7 +10,7 @@ const createUserTemplate = () => {
 };
 
 export default class User {
-  constructor(filters) {
+  constructor() {
     this._element = null;
   }
 

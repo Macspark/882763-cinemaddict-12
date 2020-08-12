@@ -7,12 +7,13 @@ const createStatTemplate = (amount) => {
 };
 
 export default class Stat {
-  constructor(filters) {
+  constructor(amount) {
+    this._amount = amount;
     this._element = null;
   }
 
   getTemplate() {
-    return createStatTemplate();
+    return createStatTemplate(this._amount);
   }
 
   getElement() {

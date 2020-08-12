@@ -27,7 +27,8 @@ export const getRandomElement = (arr) => {
 
 export const RenderPosition = {
   AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`
+  BEFOREEND: `beforeend`,
+  AFTEREND: `afterend`
 };
 
 export const render = (container, element, place) => {
@@ -36,6 +37,9 @@ export const render = (container, element, place) => {
       container.prepend(element);
       break;
     case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+    case RenderPosition.AFTEREND:
       container.append(element);
       break;
   }

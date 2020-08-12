@@ -13,7 +13,7 @@ const createFilmsBlockTemplate = () => {
 };
 
 export default class FilmsBlock {
-  constructor(filters) {
+  constructor() {
     this._element = null;
   }
 

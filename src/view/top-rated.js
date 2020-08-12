@@ -11,12 +11,12 @@ const createTopRatedTemplate = () => {
 };
 
 export default class TopRated {
-  constructor(filters) {
+  constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createTopRatedemplate();
+    return createTopRatedTemplate();
   }
 
   getElement() {

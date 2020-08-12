@@ -11,7 +11,7 @@ const createSortTemplate = () => {
 };
 
 export default class Sort {
-  constructor(filters) {
+  constructor() {
     this._element = null;
   }
 

@@ -5,7 +5,7 @@ import NoDataView from "../view/no-data.js";
 import FilmCardView from "../view/film-card.js";
 import LoadMoreBtnView from "../view/load-more-btn.js";
 import DetailsView from "../view/details.js";
-import {render, RenderPosition, replace, remove} from "../utils/render.js";
+import {render, RenderPosition, remove} from "../utils/render.js";
 
 const FILMS_PER_STEP = 5;
 
@@ -29,9 +29,9 @@ export default class Board {
     render(this._boardContainer, this._filmsBlockComponent, RenderPosition.BEFOREEND);
 
     if (this._films.length > 0) {
-      render(this._filmsBlockComponent.getElement().querySelector('.films-list'), this._filmContainerComponent, RenderPosition.BEFOREEND);
+      render(this._filmsBlockComponent.getElement().querySelector(`.films-list`), this._filmContainerComponent, RenderPosition.BEFOREEND);
     } else {
-      render(this._filmsBlockComponent.getElement().querySelector('.films-list'), this._noDataComponent, RenderPosition.BEFOREEND);
+      render(this._filmsBlockComponent.getElement().querySelector(`.films-list`), this._noDataComponent, RenderPosition.BEFOREEND);
     }
 
     this._renderFilms(0, Math.min(this._films.length, FILMS_PER_STEP));
@@ -45,7 +45,7 @@ export default class Board {
     const detailsComponent = new DetailsView(film);
 
     const showDetails = () => {
-      render(document.querySelector('body'), detailsComponent, RenderPosition.BEFOREEND);
+      render(document.querySelector(`body`), detailsComponent, RenderPosition.BEFOREEND);
       document.addEventListener(`keydown`, onEscDown);
     };
 
@@ -81,7 +81,7 @@ export default class Board {
   }
 
   _renderLoadMoreBtn() {
-    render(this._filmsBlockComponent.getElement().querySelector('.films-list'), this._loadMoreBtnComponent, RenderPosition.BEFOREEND);
+    render(this._filmsBlockComponent.getElement().querySelector(`.films-list`), this._loadMoreBtnComponent, RenderPosition.BEFOREEND);
     this._loadMoreBtnComponent.setClickHandler(this._handleLoadMoreBtnClick);
   }
 }

@@ -8,9 +8,10 @@ const createLoadMoreBtnTemplate = () => {
 
 export default class LoadMoreBtn extends AbstractView {
   constructor() {
-  super();
-  this._clickHandler = this._clickHandler.bind(this);
-}
+    super();
+    this._clickHandler = this._clickHandler.bind(this);
+  }
+
   getTemplate() {
     return createLoadMoreBtnTemplate();
   }

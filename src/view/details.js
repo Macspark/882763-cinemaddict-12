@@ -1,5 +1,5 @@
-import {createElement} from "../util.js";
-import {humanizeDuration} from "../util.js";
+import AbstractView from "./abstract.js";
+import {humanizeDuration} from "../utils/films.js";
 
 const createGenresTemplate = (genres) => {
   const genresWord = genres.length === 1 ? `Genre` : `Genres`;
@@ -171,25 +171,24 @@ const createDetailsTemplate = (film) => {
   );
 };
 
-export default class Details {
+export default class Details extends AbstractView {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
+    this._clickHandler = this._clickHandler.bind(this);
   }
 
   getTemplate() {
     return createDetailsTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _clickHandler(evt) {
+    evt.preventDefault();
+    this._callback.closeDetails();
   }
 
-  removeElement() {
-    this._element = null;
+  setClickHandler(callback) {
+    this._callback.closeDetails = callback;
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._clickHandler);
   }
 }

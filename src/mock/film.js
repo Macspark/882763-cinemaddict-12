@@ -1,5 +1,5 @@
-import {getRandomInteger} from "../util.js";
-import {getRandomElement} from "../util.js";
+import {getRandomInteger} from "../utils/common.js";
+import {getRandomElement} from "../utils/common.js";
 
 const generateTitle = () => {
   const FILM_TITLES = [

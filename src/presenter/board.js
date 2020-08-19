@@ -14,7 +14,6 @@ const FILMS_PER_STEP = 5;
 export default class Board {
   constructor(boardContainer) {
     this._boardContainer = boardContainer;
-    this._renderedFilmCount = FILMS_PER_STEP;
 
     this._sortComponent = new SortView();
     this._filmsBlockComponent = new FilmsBlockView();
@@ -31,6 +30,7 @@ export default class Board {
     this._filmsSource = films.slice();
 
     this._renderSort();
+    this._currentSortType = SortType.DEFAULT;
 
     render(this._boardContainer, this._filmsBlockComponent, RenderPosition.BEFOREEND);
 
@@ -53,11 +53,12 @@ export default class Board {
     if (this._films.length > FILMS_PER_STEP) {
       this._renderLoadMoreBtn();
     }
+    this._renderedFilmCount = FILMS_PER_STEP;
   }
 
   _clearFilmList() {
     this._filmContainerComponent.getElement().innerHTML = ``;
-    this._renderedFilmCount = FILMS_PER_STEP;
+    this._renderedFilmCount = 0;
   }
 
   _handleSortTypeChange(sortType) {

@@ -61,17 +61,17 @@ export default class Board {
     this._renderedFilmCount = 0;
   }
 
-  _handleSortTypeChange(sortType) {
+  _handleSortTypeChange(sortType, target) {
     if (this._currentSortType === sortType) {
       return;
     }
 
-    this._sortFilms(sortType);
+    this._sortFilms(sortType, target);
     this._clearFilmList();
     this._renderFilmList();
   }
 
-  _sortFilms(sortType) {
+  _sortFilms(sortType, target) {
     switch (sortType) {
       case SortType.DATE:
         this._films.sort(sortByDate);
@@ -82,6 +82,11 @@ export default class Board {
       default:
         this._films = this._filmsSource.slice();
     }
+
+    this._sortComponent.getElement().querySelectorAll(`a`).forEach((it) =>
+      it.classList.remove(`sort__button--active`)
+    );
+    target.classList.add(`sort__button--active`);
 
     this._currentSortType = sortType;
   }
@@ -107,8 +112,8 @@ export default class Board {
       detailsComponent.getElement().remove();
     };
 
-    filmComponent.setClickHandler(showDetails);
-    detailsComponent.setClickHandler(closeDetails);
+    filmComponent.setShowDetailsHandler(showDetails);
+    detailsComponent.setCloseDetailsHandler(closeDetails);
 
     render(this._filmContainerComponent, filmComponent, RenderPosition.BEFOREEND);
   }

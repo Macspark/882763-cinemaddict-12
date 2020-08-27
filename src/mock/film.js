@@ -1,6 +1,8 @@
 import {getRandomInteger} from "../utils/common.js";
 import {getRandomElement} from "../utils/common.js";
 
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
+
 const generateTitle = () => {
   const FILM_TITLES = [
     `Фильм 1`,
@@ -187,6 +189,7 @@ const generateAgeRestriction = () => {
 
 export const generateFilm = () => {
   return {
+    id: generateId(),
     title: generateTitle(),
     titleOriginal: generateTitle(),
     ageRestriction: generateAgeRestriction(),

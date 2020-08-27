@@ -2,18 +2,18 @@ import SortView from "../view/sort.js";
 import FilmsBlockView from "../view/films-block.js";
 import FilmsContainerView from "../view/films-container.js";
 import NoDataView from "../view/no-data.js";
-import FilmCardView from "../view/film-card.js";
 import LoadMoreBtnView from "../view/load-more-btn.js";
-import DetailsView from "../view/details.js";
 import {render, RenderPosition, remove} from "../utils/render.js";
 import {sortByDate, sortByRating} from "../utils/films.js";
 import {SortType} from "../const.js";
+import FilmPresenter from "./film.js";
 
 const FILMS_PER_STEP = 5;
 
 export default class Board {
   constructor(boardContainer) {
     this._boardContainer = boardContainer;
+    this._filmPresenter = {};
 
     this._sortComponent = new SortView();
     this._filmsBlockComponent = new FilmsBlockView();
@@ -23,6 +23,7 @@ export default class Board {
 
     this._handleLoadMoreBtnClick = this._handleLoadMoreBtnClick.bind(this);
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
+    this._handleModeChange = this._handleModeChange.bind(this);
   }
 
   init(films) {
@@ -56,8 +57,17 @@ export default class Board {
     this._renderedFilmCount = FILMS_PER_STEP;
   }
 
+  _handleModeChange() {
+    Object
+      .values(this._filmPresenter)
+      .forEach((presenter) => presenter.resetView());
+  }
+
   _clearFilmList() {
-    this._filmContainerComponent.getElement().innerHTML = ``;
+    Object
+      .values(this._filmPresenter)
+      .forEach((presenter) => presenter.destroy());
+    this.filmPresenter = {};
     this._renderedFilmCount = 0;
   }
 
@@ -92,30 +102,9 @@ export default class Board {
   }
 
   _renderFilm(film) {
-    const filmComponent = new FilmCardView(film);
-    const detailsComponent = new DetailsView(film);
-
-    const showDetails = () => {
-      render(document.querySelector(`body`), detailsComponent, RenderPosition.BEFOREEND);
-      document.addEventListener(`keydown`, onEscDown);
-    };
-
-    const onEscDown = (evt) => {
-      if (evt.key === `Escape` || evt.key === `Esc`) {
-        evt.preventDefault();
-        closeDetails();
-        document.removeEventListener(`keydown`, onEscDown);
-      }
-    };
-
-    const closeDetails = () => {
-      detailsComponent.getElement().remove();
-    };
-
-    filmComponent.setShowDetailsHandler(showDetails);
-    detailsComponent.setCloseDetailsHandler(closeDetails);
-
-    render(this._filmContainerComponent, filmComponent, RenderPosition.BEFOREEND);
+    const filmPresenter = new FilmPresenter(this._filmContainerComponent, this._handleModeChange);
+    filmPresenter.init(film);
+    this._filmPresenter[film.id] = filmPresenter;
   }
 
   _renderFilms(from, to) {

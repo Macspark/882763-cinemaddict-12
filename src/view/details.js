@@ -1,4 +1,4 @@
-import AbstractView from "./abstract.js";
+import SmartView from "./smart.js";
 import {humanizeDuration} from "../utils/films.js";
 
 const createGenresTemplate = (genres) => {
@@ -37,7 +37,7 @@ const createCommentsTemplate = (comments) => {
 };
 
 const createDetailsTemplate = (film) => {
-  const {title, titleOriginal, ageRestriction, rating, director, writers, actors, releaseDate, duration, country, genres, poster, description, comments, isWatchlisted, isWatched, isFavorite} = film;
+  const {emotion, title, titleOriginal, ageRestriction, rating, director, writers, actors, releaseDate, duration, country, genres, poster, description, comments, isWatchlisted, isWatched, isFavorite} = film;
   const MONTHS = [
     `January`,
     `February`,
@@ -132,11 +132,13 @@ const createDetailsTemplate = (film) => {
             <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
             <ul class="film-details__comments-list">
-            ${createCommentsTemplate(comments)}
+              ${createCommentsTemplate(comments)}
             </ul>
 
             <div class="film-details__new-comment">
-              <div for="add-emoji" class="film-details__add-emoji-label"></div>
+              <div for="add-emoji" class="film-details__add-emoji-label">
+                ${createEmotionImageTemplate(emotion)}
+              </div>
 
               <label class="film-details__comment-label">
                 <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
@@ -171,24 +173,84 @@ const createDetailsTemplate = (film) => {
   );
 };
 
-export default class Details extends AbstractView {
+const createEmotionImageTemplate = (emotion) => {
+  if (emotion) {
+    return (
+      `<img src="./images/emoji/${emotion}.png" alt="emotion" width="79" height="68">`
+    );
+  }
+  return (``);
+};
+
+export default class Details extends SmartView {
   constructor(film) {
     super();
-    this._film = film;
-    this._clickHandler = this._clickHandler.bind(this);
+    this._data = film;
+
+    this._closeDetailsHandler = this._closeDetailsHandler.bind(this);
+    this._watchlistToggleHandler = this._watchlistToggleHandler.bind(this);
+    this._watchedToggleHandler = this._watchedToggleHandler.bind(this);
+    this._favoriteToggleHandler = this._favoriteToggleHandler.bind(this);
+    this._addEmotionHandler = this._addEmotionHandler.bind(this);
+
+    this._setInnerHandlers();
   }
 
   getTemplate() {
-    return createDetailsTemplate(this._film);
+    return createDetailsTemplate(this._data);
   }
 
-  _clickHandler(evt) {
+  restoreHandlers() {
+    this._setInnerHandlers();
+    this.setCloseDetailsHandler(this._callback.closeDetails);
+  }
+
+  _setInnerHandlers() {
+    this.getElement()
+      .querySelector(`.film-details__control-label--watchlist`)
+      .addEventListener(`click`, this._watchlistToggleHandler);
+    this.getElement()
+      .querySelector(`.film-details__control-label--watched`)
+      .addEventListener(`click`, this._watchedToggleHandler);
+    this.getElement()
+      .querySelector(`.film-details__control-label--favorite`)
+      .addEventListener(`click`, this._favoriteToggleHandler);
+    this.getElement()
+      .querySelectorAll(`.film-details__emoji-item`)
+      .forEach((it) => {
+        it.addEventListener(`click`, this._addEmotionHandler);
+      });
+  }
+
+  _watchlistToggleHandler(evt) {
+    evt.preventDefault();
+    this.updateData({isWatchlisted: !this._data.isWatchlisted});
+  }
+
+  _watchedToggleHandler(evt) {
+    evt.preventDefault();
+    this.updateData({isWatched: !this._data.isWatched});
+  }
+
+  _favoriteToggleHandler(evt) {
+    evt.preventDefault();
+    this.updateData({isFavorite: !this._data.isFavorite});
+  }
+
+  _addEmotionHandler(evt) {
+    if (this._data.emotion === evt.target.value) {
+      return;
+    }
+    this.updateData({emotion: evt.target.value});
+  }
+
+  _closeDetailsHandler(evt) {
     evt.preventDefault();
     this._callback.closeDetails();
   }
 
-  setClickHandler(callback) {
+  setCloseDetailsHandler(callback) {
     this._callback.closeDetails = callback;
-    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._clickHandler);
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closeDetailsHandler);
   }
 }

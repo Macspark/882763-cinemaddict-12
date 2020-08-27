@@ -1,15 +1,22 @@
-export const humanizeDuration = (value) => {
-  const hour = 60;
-  const hours = Math.floor(value / hour);
-  if (hours === 0) {
-    return `${value}m`;
-  } else {
-    const minutes = value - (hours * hour);
-    if (minutes !== 0) {
-      return `${hours}h ${minutes}m`;
-    } else {
-      return `${hours}h`;
-    }
+import moment from "moment";
+import {FormatType} from "../const.js";
+
+export const formatTime = (formatType, time) => {
+  if (!(time instanceof Date)) {
+    return ``;
+  }
+
+  switch (formatType) {
+    case FormatType.DURATION:
+      return moment(time).utc(false).format(`hh[h] mm[m]`);
+    case FormatType.YEAR:
+      return moment(time).utc(false).format(`YYYY`);
+    case FormatType.DATE:
+      return moment(time).utc(false).format(`Do MMMM YYYY`);
+    case FormatType.SINCE:
+      return moment(time).format(`YYYY/MM/DD hh[:]mm`);
+    default:
+      return ``;
   }
 };
 

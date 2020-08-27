@@ -123,10 +123,10 @@ const generateReleaseDate = () => {
 
 const generateDuration = () => {
   const DurationMinRange = {
-    MIN: 50,
-    MAX: 210
+    MIN: 0,
+    MAX: 10000000
   };
-  const duration = getRandomInteger(DurationMinRange.MIN, DurationMinRange.MAX);
+  const duration = new Date(getRandomInteger(DurationMinRange.MIN, DurationMinRange.MAX));
   return duration;
 };
 

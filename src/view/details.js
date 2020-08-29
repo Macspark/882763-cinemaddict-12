@@ -1,5 +1,6 @@
 import SmartView from "./smart.js";
-import {humanizeDuration} from "../utils/films.js";
+import {formatTime} from "../utils/films.js";
+import {FormatType} from "../const.js";
 
 const createGenresTemplate = (genres) => {
   const genresWord = genres.length === 1 ? `Genre` : `Genres`;
@@ -26,7 +27,7 @@ const createCommentsTemplate = (comments) => {
           <p class="film-details__comment-text">${message}</p>
           <p class="film-details__comment-info">
             <span class="film-details__comment-author">${author}</span>
-            <span class="film-details__comment-day">${date.getFullYear()}/${date.getMonth()}/${date.getDay()} ${date.getHours()}:${date.getMinutes()}</span>
+            <span class="film-details__comment-day">${formatTime(FormatType.SINCE, date)}</span>
             <button class="film-details__comment-delete">Delete</button>
           </p>
         </div>
@@ -38,20 +39,6 @@ const createCommentsTemplate = (comments) => {
 
 const createDetailsTemplate = (film) => {
   const {emotion, title, titleOriginal, ageRestriction, rating, director, writers, actors, releaseDate, duration, country, genres, poster, description, comments, isWatchlisted, isWatched, isFavorite} = film;
-  const MONTHS = [
-    `January`,
-    `February`,
-    `March`,
-    `April`,
-    `May`,
-    `June`,
-    `July`,
-    `August`,
-    `Septermber`,
-    `October`,
-    `November`,
-    `December`
-  ];
 
   return (
     `<section class="film-details">
@@ -94,11 +81,11 @@ const createDetailsTemplate = (film) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
-                  <td class="film-details__cell">${releaseDate.getDay()} ${MONTHS[releaseDate.getMonth()]} ${releaseDate.getFullYear()}</td>
+                  <td class="film-details__cell">${formatTime(FormatType.DATE, releaseDate)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Runtime</td>
-                  <td class="film-details__cell">${humanizeDuration(duration)}</td>
+                  <td class="film-details__cell">${formatTime(FormatType.DURATION, duration)}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>

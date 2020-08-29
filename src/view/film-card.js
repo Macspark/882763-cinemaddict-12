@@ -1,5 +1,6 @@
 import SmartView from "./smart.js";
-import {humanizeDuration} from "../utils/films.js";
+import {formatTime} from "../utils/films.js";
+import {FormatType} from "../const.js";
 
 export const createFilmCardTemplate = (film) => {
   const {title, rating, releaseDate, duration, genres, poster, description, comments} = film;
@@ -9,8 +10,8 @@ export const createFilmCardTemplate = (film) => {
       <h3 class="film-card__title">${title}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${releaseDate.getFullYear()}</span>
-        <span class="film-card__duration">${humanizeDuration(duration)}</span>
+        <span class="film-card__year">${formatTime(FormatType.YEAR, releaseDate)}</span>
+        <span class="film-card__duration">${formatTime(FormatType.DURATION, duration)}</span>
         <span class="film-card__genre">${genres[0]}</span>
       </p>
       <img src="${poster}" alt="${title}" class="film-card__poster">
